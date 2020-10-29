@@ -1,0 +1,32 @@
+{
+  "builders": [
+    {
+     "server_name": "test",
+     "type": "scaleway",
+     "image": "365a8b9c-0c6e-4875-a887-dc3213db9e20",
+     "image_name": "ubuntu",
+     "region": "par1",
+     "zone": "fr-par-1",
+     "commercial_type": "DEV1-S",
+     "ssh_private_key_file": "/root/.ssh/id_rsa",
+     "ssh_username": "root"
+    }
+  ],
+  "provisioners": [
+    {
+     "type": "shell",
+     "inline": [
+          "sleep 30",
+          "apt-get update",
+          "apt-get -y upgrade",
+          "apt install build-essential libpcre3 libpcre3-dev libssl-dev nginx libnginx-mod-rtmp ffmpeg -y",
+          "apt-get -y install ansible"
+     ]
+    },
+     {
+      "type": "ansible-local",
+      "playbook_file": "/root/projet/app.yml"
+     }
+  ]
+}
+
